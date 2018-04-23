@@ -10,7 +10,7 @@ resource "azurerm_subnet" "api-mgmt-subnet" {
   name                 = "core-infra-subnet-apimgmt-${var.env}"
   resource_group_name  = "${data.terraform_remote_state.core_infra.resourcegroup_name}"
   virtual_network_name = "${data.terraform_remote_state.core_infra.vnetname}"
-  address_prefix       = "10.20.1.0/24"
+  address_prefix       = "10.100.146.0/24"
 }
 
 resource "azurerm_template_deployment" "api-managment" {
