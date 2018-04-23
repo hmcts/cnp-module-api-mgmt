@@ -6,6 +6,11 @@ variable "env" {
   type = "string"
 }
 
-variable "subnetResourceId" {
+variable "infra_location" {
+  type    = "string"
+  default = "core-infra"
+}
+
+variable "subscription" {
   type = "string"
 }
