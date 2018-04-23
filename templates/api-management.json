@@ -123,7 +123,9 @@
             "type": "String"
         }
     },
-    "variables": {},
+    "variables": {
+        "OrganizationName": "HMCTS"
+    },
     "resources": [
         {
             "type": "Microsoft.ApiManagement/service",
