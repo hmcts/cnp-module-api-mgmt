@@ -1,12 +1,3 @@
-resource "azurerm_resource_group" "api-mgmt-resourcegroup" {
-  name     = "core-api-mgmt-rg-${var.env}"
-  location = "${var.location}"
-
-  tags {
-    environment = "${var.env}"
-  }
-}
-
 data "template_file" "apimgmttemplate" {
   template = "${file("${path.module}/templates/api-management.json")}"
 }
@@ -17,7 +8,7 @@ locals {
 
 resource "azurerm_subnet" "api-mgmt-subnet" {
   name                 = "core-api-mgmt-subnet"
-  resource_group_name  = "${azurerm_resource_group.api-mgmt-resourcegroup.name}"
+  resource_group_name  = "${data.terraform_remote_state.core_infra.resourcegroup_name}"
   virtual_network_name = "${data.terraform_remote_state.core_infra.vnetname}"
   address_prefix       = "10.20.1.0/24"
 }
@@ -25,7 +16,7 @@ resource "azurerm_subnet" "api-mgmt-subnet" {
 resource "azurerm_template_deployment" "api-managment" {
   template_body       = "${data.template_file.apimgmttemplate.rendered}"
   name                = "${local.name}"
-  resource_group_name = "${azurerm_resource_group.api-mgmt-resourcegroup.name}"
+  resource_group_name = "${data.terraform_remote_state.core_infra.resourcegroup_name}"
   deployment_mode     = "Incremental"
 
   parameters = {
