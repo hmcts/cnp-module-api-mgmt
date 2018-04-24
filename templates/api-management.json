@@ -14,18 +14,6 @@
             "defaultValue": "platform-api-mgmt",
             "type": "String"
         },
-        "groups_guests_name": {
-            "defaultValue": "guests",
-            "type": "String"
-        },
-        "groups_developers_name": {
-            "defaultValue": "developers",
-            "type": "String"
-        },
-        "groups_administrators_name": {
-            "defaultValue": "administrators",
-            "type": "String"
-        },
         "policies_policy_name": {
             "defaultValue": "policy",
             "type": "String"
@@ -166,51 +154,6 @@
                 "certificates": null
             },
             "dependsOn": []
-        },
-        {
-            "type": "Microsoft.ApiManagement/service/groups",
-            "name": "[concat(parameters('platform_api_mgmt_name'), '/', parameters('groups_administrators_name'))]",
-            "apiVersion": "2017-03-01",
-            "scale": null,
-            "properties": {
-                "displayName": "[concat(parameters('groups_administrators_name'),'Administrators', parameters('groups_administrators_name'))]",
-                "description": "[concat(parameters('groups_administrators_name'),'Administrators is a built-in group. Its membership is managed by the system. Microsoft Azure subscription ', parameters('groups_administrators_name'),' fall into this group.')]",
-                "type": "system",
-                "externalId": null
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service', parameters('platform_api_mgmt_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.ApiManagement/service/groups",
-            "name": "[concat(parameters('platform_api_mgmt_name'), '/', parameters('groups_developers_name'))]",
-            "apiVersion": "2017-03-01",
-            "scale": null,
-            "properties": {
-                "displayName": "[concat(parameters('groups_developers_name'),'Developers', parameters('groups_developers_name'))]",
-                "description": "[concat(parameters('groups_developers_name'),'Developers is a built-in group. Its membership is managed by the system. Signed-in users fall into this group.')]",
-                "type": "system",
-                "externalId": null
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service', parameters('platform_api_mgmt_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.ApiManagement/service/groups",
-            "name": "[concat(parameters('platform_api_mgmt_name'), '/', parameters('groups_guests_name'))]",
-            "apiVersion": "2017-03-01",
-            "scale": null,
-            "properties": {
-                "displayName": "[concat(parameters('groups_guests_name'),'Guests', parameters('groups_guests_name'))]",
-                "description": "[concat(parameters('groups_guests_name'),'Guests is a built-in group. Its membership is managed by the system. Unauthenticated users visiting the developer portal fall into this group.')]",
-                "type": "system",
-                "externalId": null
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service', parameters('platform_api_mgmt_name'))]"
-            ]
         },
         {
             "type": "Microsoft.ApiManagement/service/notifications",
