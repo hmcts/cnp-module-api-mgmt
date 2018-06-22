@@ -8,9 +8,9 @@ locals {
 
 resource "azurerm_subnet" "api-mgmt-subnet" {
   name                 = "core-infra-subnet-apimgmt-${var.env}"
-  resource_group_name  = "${data.terraform_remote_state.core_infra.resourcegroup_name}"
-  virtual_network_name = "${data.terraform_remote_state.core_infra.vnetname}"
-  address_prefix       = "${cidrsubnet("${var.source_range}", 4, length(data.terraform_remote_state.core_infra.subnet_ids.value))}"
+  resource_group_name  = "${var.vnet_rg_name}"
+  virtual_network_name = "${var.vnet_name}"
+  address_prefix       = "${cidrsubnet("${var.source_range}", 4, var.source_range_index)}"
 
   lifecycle {
     ignore_changes = "address_prefix"
@@ -20,7 +20,7 @@ resource "azurerm_subnet" "api-mgmt-subnet" {
 resource "azurerm_template_deployment" "api-managment" {
   template_body       = "${data.template_file.apimgmttemplate.rendered}"
   name                = "${local.name}"
-  resource_group_name = "${data.terraform_remote_state.core_infra.resourcegroup_name}"
+  resource_group_name = "${var.vnet_rg_name}"
   deployment_mode     = "Incremental"
 
   parameters = {
