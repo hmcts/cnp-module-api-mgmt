@@ -14,3 +14,7 @@ variable "infra_location" {
 variable "subscription" {
   type = "string"
 }
+
+variable "source_range" {
+  type = "string"
+}
