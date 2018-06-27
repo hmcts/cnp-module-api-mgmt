@@ -14,6 +14,18 @@
             "defaultValue": "platform-api-mgmt",
             "type": "String"
         },
+        "publisher_email": {
+            "defaultValue": "api-mangement@hmcts.net",
+            "type": "String"
+        },
+        "publisher_name": {
+            "defaultValue": "HMCTS Reform Platform Engineering",
+            "type": "String"
+        },
+        "notification_sender_email": {
+            "defaultValue": "apimgmt-noreply@mail.windowsazure.com",
+            "type": "String"
+        },
         "policies_policy_name": {
             "defaultValue": "policy",
             "type": "String"
@@ -129,13 +141,13 @@
             },
             "name": "[parameters('platform_api_mgmt_name')]",
             "apiVersion": "2017-03-01",
-            "location": "UK South",
+            "location": "[parameters('location')]",
             "tags": {},
             "scale": null,
             "properties": {
-                "publisherEmail": "jason.paige@hmcts.net",
-                "publisherName": "HMCTS Reform Platform Engineering",
-                "notificationSenderEmail": "apimgmt-noreply@mail.windowsazure.com",
+                "publisherEmail": "[parameters('publisher_email')]",
+                "publisherName": "[parameters('publisher_name')]",
+                "notificationSenderEmail": "[parameters('notification_sender_email')]",
                 "hostnameConfigurations": [],
                 "additionalLocations": null,
                 "virtualNetworkConfiguration": {

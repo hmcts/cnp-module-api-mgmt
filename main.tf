@@ -25,6 +25,9 @@ resource "azurerm_template_deployment" "api-managment" {
 
   parameters = {
     location                           = "${var.location}"
+    publisher_email                    = "${var.publisher_email}"
+    publisher_name                     = "${var.publisher_name}"
+    notification_sender_email          = "${var.notification_sender_email}"
     env                                = "${var.env}"
     platform_api_mgmt_name             = "${local.name}"
     platform_api_mgmt_subnetResourceId = "${azurerm_subnet.api-mgmt-subnet.id}"
