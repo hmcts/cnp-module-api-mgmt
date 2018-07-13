@@ -3,7 +3,8 @@ data "template_file" "apimgmttemplate" {
 }
 
 locals {
-  name = "core-api-mgmt-${var.env}"
+  name                  = "core-api-mgmt-${var.env}"
+  platform_api_mgmt_sku = "${var.env == "prod" ? "Premium" : "Developer"}"
 }
 
 resource "azurerm_subnet" "api-mgmt-subnet" {
@@ -31,5 +32,6 @@ resource "azurerm_template_deployment" "api-managment" {
     env                                = "${var.env}"
     platform_api_mgmt_name             = "${local.name}"
     platform_api_mgmt_subnetResourceId = "${azurerm_subnet.api-mgmt-subnet.id}"
+    platform_api_mgmt_sku              = "${local.platform_api_mgmt_sku}"
   }
 }
