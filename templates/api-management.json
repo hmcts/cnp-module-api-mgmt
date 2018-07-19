@@ -129,6 +129,10 @@
         "platform_api_mgmt_subnetResourceId": {
             "defaultValue": "",
             "type": "String"
+        },
+        "platform_api_mgmt_sku": {
+            "defaultValue": "Developer",
+            "type": "String"
         }
     },
     "variables": {},
@@ -136,7 +140,7 @@
         {
             "type": "Microsoft.ApiManagement/service",
             "sku": {
-                "name": "Developer",
+                "name": "[parameters('platform_api_mgmt_sku')]",
                 "capacity": 1
             },
             "name": "[parameters('platform_api_mgmt_name')]",
