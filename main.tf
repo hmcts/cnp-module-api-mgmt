@@ -33,5 +33,6 @@ resource "azurerm_template_deployment" "api-managment" {
     platform_api_mgmt_name             = "${local.name}"
     platform_api_mgmt_subnetResourceId = "${azurerm_subnet.api-mgmt-subnet.id}"
     platform_api_mgmt_sku              = "${local.platform_api_mgmt_sku}"
+    teamName                           = "${lookup(var.common_tags, "Team Name")}"
   }
 }

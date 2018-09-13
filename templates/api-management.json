@@ -133,6 +133,9 @@
         "platform_api_mgmt_sku": {
             "defaultValue": "Developer",
             "type": "String"
+        },
+        "teamName":{
+          "type": "string"
         }
     },
     "variables": {},
@@ -146,7 +149,9 @@
             "name": "[parameters('platform_api_mgmt_name')]",
             "apiVersion": "2017-03-01",
             "location": "[parameters('location')]",
-            "tags": {},
+            "tags": {
+               "Team Name": "[parameters('teamName')]"
+            },
             "scale": null,
             "properties": {
                 "publisherEmail": "[parameters('publisher_email')]",
