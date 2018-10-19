@@ -7,9 +7,9 @@ variable "env" {
   type = "string"
 }
 
-variable "subscription" {
-  type = "string"
-}
+# variable "subscription" {
+#   type = "string"
+# }
 
 # variable "source_range" {
 #   type = "string"
@@ -17,9 +17,9 @@ variable "subscription" {
 
 # variable "source_range_index" {}
 
-# variable "vnet_rg_name" {
-#   type = "string"
-# }
+variable "vnet_rg_name" {
+  type = "string"
+}
 
 # variable "vnet_name" {
 #   type = "string"
