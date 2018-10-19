@@ -11,17 +11,21 @@ variable "subscription" {
   type = "string"
 }
 
-variable "source_range" {
-  type = "string"
-}
+# variable "source_range" {
+#   type = "string"
+# }
 
-variable "source_range_index" {}
+# variable "source_range_index" {}
 
-variable "vnet_rg_name" {
-  type = "string"
-}
+# variable "vnet_rg_name" {
+#   type = "string"
+# }
 
-variable "vnet_name" {
+# variable "vnet_name" {
+#   type = "string"
+# }
+
+variable "api_subnet_id" {
   type = "string"
 }
 
