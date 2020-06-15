@@ -7,23 +7,9 @@ variable "env" {
   type = "string"
 }
 
-# variable "subscription" {
-#   type = "string"
-# }
-
-# variable "source_range" {
-#   type = "string"
-# }
-
-# variable "source_range_index" {}
-
 variable "vnet_rg_name" {
   type = "string"
 }
-
-# variable "vnet_name" {
-#   type = "string"
-# }
 
 variable "api_subnet_id" {
   type = "string"
@@ -47,6 +33,6 @@ variable "notification_sender_email" {
 variable "common_tags" {
   type = "map"
   default = {
-    "Team Name" = "pleaseTagMe"
+    "managedBy" = "pleaseTagMe"
   }
 }

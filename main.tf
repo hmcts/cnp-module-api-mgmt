@@ -1,38 +1,19 @@
-data "template_file" "apimgmttemplate" {
-  template = "${file("${path.module}/templates/api-management.json")}"
-}
-
 locals {
   name                  = "core-api-mgmt-${var.env}"
-  platform_api_mgmt_sku = "${var.env == "prod" ? "Premium" : "Developer"}"
+  platform_api_mgmt_sku = "${var.env == "prod" ? "Premium_1" : "Developer_1"}"
 }
 
-# resource "azurerm_subnet" "api-mgmt-subnet" {
-#   name                 = "core-infra-subnet-apimgmt-${var.env}"
-#   resource_group_name  = "${var.vnet_rg_name}"
-#   virtual_network_name = "${var.vnet_name}"
-#   address_prefix       = "${cidrsubnet("${var.source_range}", 4, var.source_range_index)}"
-
-#   lifecycle {
-#     ignore_changes = "address_prefix"
-#   }
-# }
-
-resource "azurerm_template_deployment" "api-managment" {
-  template_body       = "${data.template_file.apimgmttemplate.rendered}"
+resource "azurerm_api_management" "api-managment" {
   name                = "${local.name}"
+  location            = "${var.location}"
   resource_group_name = "${var.vnet_rg_name}"
-  deployment_mode     = "Incremental"
+  publisher_name      = "${var.publisher_name}"
+  publisher_email     = "${var.publisher_email}"
+  notification_sender_email = "${var.notification_sender_email}"
 
-  parameters = {
-    location                           = "${var.location}"
-    publisher_email                    = "${var.publisher_email}"
-    publisher_name                     = "${var.publisher_name}"
-    notification_sender_email          = "${var.notification_sender_email}"
-    env                                = "${var.env}"
-    platform_api_mgmt_name             = "${local.name}"
-    platform_api_mgmt_subnetResourceId = "${var.api_subnet_id}"
-    platform_api_mgmt_sku              = "${local.platform_api_mgmt_sku}"
-    teamName                           = "${lookup(var.common_tags, "Team Name")}"
+  virtual_network_configuration {
+    subnet_id = "${var.api_subnet_id}"
   }
+
+  sku_name = "${local.platform_api_mgmt_sku}"
 }
