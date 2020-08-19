@@ -1,47 +1,47 @@
 variable "location" {
-  type    = "string"
+  type    = string
   default = "UK South"
 }
 
 variable "env" {
-  type = "string"
+  type = string
 }
 
 variable "subscription" {
-  type = "string"
+  type = string
 }
 
 variable "source_range" {
-  type = "string"
+  type = string
 }
 
 variable "source_range_index" {}
 
 variable "vnet_rg_name" {
-  type = "string"
+  type = string
 }
 
 variable "vnet_name" {
-  type = "string"
+  type = string
 }
 
 variable "publisher_email" {
-  type    = "string"
+  type    = string
   default = "api-mangement@hmcts.net"
 }
 
 variable "publisher_name" {
-  type    = "string"
+  type    = string
   default = "HMCTS Reform Platform Engineering"
 }
 
 variable "notification_sender_email" {
-  type    = "string"
+  type    = string
   default = "apimgmt-noreply@mail.windowsazure.com"
 }
 
 variable "common_tags" {
-  type = "map"
+  type = map(string)
   default = {
     "Team Name" = "pleaseTagMe"
   }
