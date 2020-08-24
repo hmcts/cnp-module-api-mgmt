@@ -1,5 +1,5 @@
 data "template_file" "apimgmttemplate" {
-  template = file(path.module/templates/api-management.json)
+  template = file("${path.module}/templates/api-management.json")
 }
 
 locals {
