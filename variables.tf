@@ -8,6 +8,10 @@ variable "vnet_rg_name" {}
 
 variable "vnet_name" {}
 
+variable "virtual_network_type" {
+  default = "External"
+}
+
 variable "source_range_index" {}
 
 variable "source_range" {}

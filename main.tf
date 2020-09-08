@@ -21,7 +21,7 @@ resource "azurerm_api_management" "api-managment" {
   publisher_name            = var.publisher_name
   publisher_email           = var.publisher_email
   notification_sender_email = var.notification_sender_email
-  virtual_network_type      = "Internal"
+  virtual_network_type      = var.virtual_network_type
 
   virtual_network_configuration  {
     subnet_id = azurerm_subnet.api-mgmt-subnet.id
