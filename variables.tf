@@ -11,9 +11,11 @@ variable "vnet_rg_name" {
   type = "string"
 }
 
-variable "api_subnet_id" {
-  type = "string"
-}
+// variable "api_subnet_id" {
+//   type = "string"
+// }
+
+variable "source_range_index" {}
 
 variable "publisher_email" {
   type    = "string"
