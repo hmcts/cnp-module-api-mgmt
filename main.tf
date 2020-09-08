@@ -3,6 +3,17 @@ locals {
   platform_api_mgmt_sku = "${var.env == "prod" ? "Premium_1" : "Developer_1"}"
 }
 
+resource "azurerm_subnet" "api-mgmt-subnet" {
+  name                 = "core-infra-subnet-apimgmt-${var.env}"
+  resource_group_name  = var.vnet_rg_name
+  virtual_network_name = var.vnet_name
+  address_prefix       = cidrsubnet(var.source_range, 4, var.source_range_index)
+
+  lifecycle {
+    ignore_changes = [address_prefix]
+  }
+}
+
 resource "azurerm_api_management" "api-managment" {
   name                = "${local.name}"
   location            = "${var.location}"
@@ -12,7 +23,7 @@ resource "azurerm_api_management" "api-managment" {
   notification_sender_email = "${var.notification_sender_email}"
 
   virtual_network_configuration {
-    subnet_id = "${var.api_subnet_id}"
+    subnet_id = azurerm_subnet.api-mgmt-subnet.id
   }
 
   sku_name = "${local.platform_api_mgmt_sku}"
