@@ -27,5 +27,9 @@ resource "azurerm_api_management" "api-managment" {
     subnet_id = azurerm_subnet.api-mgmt-subnet.id
   }
 
+  identity {
+    type         = "SystemAssigned"
+  }
+
   sku_name = local.platform_api_mgmt_sku
 }
