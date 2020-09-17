@@ -17,10 +17,13 @@ env.TF_VAR_vnet_rg_name = params.EXISTING_VNET_RG_NAME
 env.TF_VAR_vnet_name = params.EXISTING_VNET_NAME
 env.TF_VAR_source_range = params.SOURCE_RANGE
 env.TF_VAR_source_range_index = params.NUM_EXISTING_SUBNETS
+
 planOnly = params.PLAN_ONLY
 
 node {
   env.PATH = "$env.PATH:/usr/local/bin"
+  env.GIT_URL = 'https://github.com/hmcts/cnp-module-api-mgmt'
+
   def az = { cmd -> return sh(script: "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az $cmd", returnStdout: true).trim() }
 
   stageCheckout('git@github.com:hmcts/moj-module-api-mgmt.git')
