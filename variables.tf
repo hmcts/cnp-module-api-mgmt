@@ -14,7 +14,9 @@ variable "virtual_network_type" {
 
 variable "source_range_index" {}
 
-variable "source_range" {}
+variable "source_range" {
+  default = "10.96.192.0/18"
+}
 
 variable "publisher_email" {
   default = "api-mangement@hmcts.net"
@@ -33,3 +35,5 @@ variable "common_tags" {
     "managedBy" = "pleaseTagMe"
   }
 }
+
+variable "product" {}
