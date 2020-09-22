@@ -35,5 +35,3 @@ variable "common_tags" {
     "managedBy" = "pleaseTagMe"
   }
 }
-
-variable "product" {}
