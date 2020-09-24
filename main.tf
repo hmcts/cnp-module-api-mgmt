@@ -7,7 +7,7 @@ resource "azurerm_subnet" "api-mgmt-subnet" {
   name                 = "core-infra-subnet-apimgmt-${var.env}"
   resource_group_name  = var.vnet_rg_name
   virtual_network_name = var.vnet_name
-  address_prefixes     = [ "${cidrsubnet(var.source_range, 4, 4)}" ]
+  address_prefixes     = ["${cidrsubnet(var.source_range, 4, 4)}"]
 
   lifecycle {
     ignore_changes = [address_prefix]
@@ -23,12 +23,12 @@ resource "azurerm_api_management" "api-managment" {
   notification_sender_email = var.notification_sender_email
   virtual_network_type      = var.virtual_network_type
 
-  virtual_network_configuration  {
+  virtual_network_configuration {
     subnet_id = azurerm_subnet.api-mgmt-subnet.id
   }
 
   identity {
-    type         = "SystemAssigned"
+    type = "SystemAssigned"
   }
 
   sku_name = local.platform_api_mgmt_sku
