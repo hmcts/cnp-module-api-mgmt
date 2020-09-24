@@ -27,8 +27,8 @@ jobs:
         FILE_NAME: provider.tf
         FILE_DATA: |
           provider "azurerm" { 
-            features {}
-            }
+            features {} 
+          }
 
     - name: Terraform Init
       run: terraform init
