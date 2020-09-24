@@ -22,13 +22,13 @@ jobs:
         terraform_version: ${{ env.TF_VERSION }}
 
     - name: Setup providers configuration
-      uses: finnp/create-file-action@master
-      env:
-        FILE_NAME: provider.tf
-        FILE_DATA: |
-          provider "azurerm" { 
-            features {} 
-          }
+      shell: bash
+      run: |
+        cat <<< EOF > provider.tf
+        provider "azurerm" {
+          features {}
+        }
+        EOF
 
     - name: Terraform Init
       run: terraform init
