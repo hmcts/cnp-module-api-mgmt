@@ -24,7 +24,7 @@ jobs:
     - name: Setup providers configuration
       uses: finnp/create-file-action@master
       env:
-        FILE_NAME: providers.tf
+        FILE_NAME: provider.tf
         FILE_DATA: |
           provider "azurerm" { 
             features {}
