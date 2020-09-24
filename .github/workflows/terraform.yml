@@ -24,7 +24,7 @@ jobs:
     - name: Setup providers configuration
       shell: bash
       run: |
-        cat <<< EOF > provider.tf
+        cat << EOF > provider.tf
         provider "azurerm" {
           features {}
         }
