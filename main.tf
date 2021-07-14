@@ -38,7 +38,7 @@ resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
   api_management_id = azurerm_api_management.api-managment.id
 
   proxy {
-    host_name    = join("", [azurerm_api_management.api-managment.name, ".azure-api.net"])
-    negotiate_client_certificate = true 
+    host_name                    = join("", [azurerm_api_management.api-managment.name, ".azure-api.net"])
+    negotiate_client_certificate = true
   }
 }
