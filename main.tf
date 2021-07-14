@@ -33,32 +33,3 @@ resource "azurerm_api_management" "api-managment" {
 
   sku_name = local.platform_api_mgmt_sku
 }
-
-data "azurerm_api_management" "core-api-mgmt" {
-  name                = local.name
-  resource_group_name = var.vnet_rg_name
-}
-
-output "api_management_host_name" {
-  value = data.azurerm_api_management.core-api-mgmt.hostname_configuration.management.host_name
-}
-
-output "api_management_client_cert" {
-  value = data.azurerm_api_management.core-api-mgmt.hostname_configuration.management.negotiate_client_certificate
-}
-
-output "api_management_portal_host_name" {
-  value = data.azurerm_api_management.core-api-mgmt.hostname_configuration.portal.host_name
-}
-
-output "api_management_portal_client_cert" {
-  value = data.azurerm_api_management.core-api-mgmt.hostname_configuration.portal.negotiate_client_certificate
-}
-
-output "api_management_dev_portal_host_name" {
-  value = data.azurerm_api_management.core-api-mgmt.hostname_configuration.developer_portal.host_name
-}
-
-output "api_management_dev_portal_client_cert" {
-  value = data.azurerm_api_management.core-api-mgmt.hostname_configuration.developer_portal.negotiate_client_certificate
-}
