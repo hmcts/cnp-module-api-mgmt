@@ -1,6 +1,19 @@
 locals {
-  name                  = "core-api-mgmt-${var.env}"
-  platform_api_mgmt_sku = "${var.env == "prod" ? "Premium_1" : "Developer_1"}"
+  name                  = "core-api-mgmt-${var.env}-private"
+  platform_api_mgmt_sku = var.env == "prod" ? "Premium_1" : "Developer_1"
+}
+
+resource "azurerm_public_ip" "apim" {
+  name                = "core-api-mgmt-${var.env}-private-pip"
+  resource_group_name = var.vnet_rg_name
+  location            = var.location
+  allocation_method   = "Static"
+
+  tags = {
+    environment = "Production"
+  }
+  sku = "Standard"
+
 }
 
 resource "azurerm_subnet" "api-mgmt-subnet" {
@@ -14,24 +27,22 @@ resource "azurerm_subnet" "api-mgmt-subnet" {
   }
 }
 
-resource "azurerm_api_management" "api-managment" {
-  name                      = local.name
-  location                  = var.location
-  resource_group_name       = var.vnet_rg_name
-  publisher_name            = var.publisher_name
-  publisher_email           = var.publisher_email
-  notification_sender_email = var.notification_sender_email
-  virtual_network_type      = var.virtual_network_type
-
-  virtual_network_configuration {
-    subnet_id = azurerm_subnet.api-mgmt-subnet.id
+resource "azurerm_template_deployment" "apim" {
+  name                = "core-infra-subnet-apimgmt-${var.env}"
+  resource_group_name = var.vnet_rg_name
+  deployment_mode     = "Incremental"
+  template_body       = file("arm/apim.json")
+  parameters = {
+    name                    = local.name
+    location                = var.location
+    sku_name                = var.sku_name
+    publisherEmail          = var.publisher_email
+    publisherName           = var.publisher_name
+    subnetResourceId        = azurerm_subnet.api-mgmt-subnet.id
+    notificationSenderEmail = var.notification_sender_email
+    virtualNetworkType      = var.virtualNetworkType
+    publicIpAddressId       = azurerm_public_ip.apim.id
   }
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  sku_name = local.platform_api_mgmt_sku
 }
 
 resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
@@ -41,4 +52,37 @@ resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
     host_name                    = join("", [azurerm_api_management.api-managment.name, ".azure-api.net"])
     negotiate_client_certificate = true
   }
+}
+
+resource "azurerm_key_vault_access_policy" "apim" {
+  key_vault_id = data.azurerm_key_vault.main.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_api_management.apim.identity[0]["principal_id"]
+
+  secret_permissions = [
+    "Get",
+    "List"
+  ]
+
+  depends_on = [
+    azurerm_template_deployment.apim,
+    data.azurerm_api_management.apim
+  ]
+}
+
+
+resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
+  api_management_id = data.azurerm_api_management.apim.id
+
+  proxy {
+    host_name                    = "core-api-mgmt.${var.env}.platform.hmcts.net"
+    negotiate_client_certificate = true
+    key_vault_id                 = data.azurerm_key_vault_certificate.certificate.secret_id
+  }
+
+  depends_on = [
+    azurerm_template_deployment.apim,
+    data.azurerm_api_management.apim,
+    azurerm_key_vault_access_policy.apim
+  ]
 }

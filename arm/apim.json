@@ -1,0 +1,100 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "name": {
+        "type": "string",
+        "metadata": {
+          "description": "APIM Name"
+        }
+      },
+      "location": {
+        "type": "string",
+        "metadata": {
+          "description": "Location for all resources."
+        }
+      },
+        "subnetResourceId": {
+        "type": "string",
+        "metadata": {
+          "description": "APIM Name"
+        }
+      },
+      "sku_name": {
+        "type": "string",
+        "metadata": {
+          "description": "SKU Name"
+        }
+      },
+      "publisherEmail": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "The email address of the owner of the service"
+      }
+    },
+    "publisherName": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "The name of the owner of the service"
+      }
+    },
+      "notificationSenderEmail": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "notificationSenderEmail"
+      }
+    },
+    "virtualNetworkType": {
+      "type": "string",
+      "metadata": {
+        "description": "Virtual Network Type"
+      }
+    },
+    "publicIpAddressId": {
+      "type": "string",
+      "metadata": {
+        "description": "Public IP Address ID"
+      }
+    }
+    },
+    "variables": {
+    },
+    "resources": [
+    {
+      "apiVersion": "2019-12-01",
+      "name": "[parameters('Name')]",
+      "type": "Microsoft.ApiManagement/service",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('sku_name')]",
+        "capacity": 3
+      },
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "notificationSenderEmail": "[parameters('notificationSenderEmail')]",
+        "publisherEmail": "[parameters('publisherEmail')]",
+        "publicIpAddressId": "[parameters('publicIpAddressId')]",
+        "publisherName": "[parameters('publisherName')]",
+        "virtualNetworkType": "[parameters('virtualNetworkType')]",
+        "virtualNetworkConfiguration": {
+          "subnetResourceId": "[parameters('subnetResourceId')]"
+        },
+        "hostnameConfigurations": [
+            {
+                "type": "Proxy",
+                "hostName": "[concat(parameters('Name'), '.azure-api.net')]",
+                "negotiateClientCertificate": true,
+                "defaultSslBinding": true,
+                "certificateSource": "BuiltIn"
+            }
+        ]
+      },
+      "zones": [ "1","2","3" ]
+    }
+    ]
+}
