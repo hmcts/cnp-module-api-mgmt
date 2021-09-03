@@ -54,17 +54,13 @@ resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
   }
 }
 
-resource "azurerm_key_vault_access_policy" "apim" {
-  key_vault_id = data.azurerm_key_vault.main.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = data.azurerm_api_management.apim.identity[0]["principal_id"]
+resource "azurerm_role_assignment" "apim" {
+  principal_id = data.azurerm_api_management.apim.identity[0]["principal_id"]
+  scope        = data.azurerm_key_vault.main.id
 
-  secret_permissions = [
-    "Get",
-    "List"
-  ]
+  role_definition_name = "Key Vault Secrets User"
 
-  depends_on = [
+    depends_on = [
     azurerm_template_deployment.apim,
     data.azurerm_api_management.apim
   ]
@@ -83,6 +79,6 @@ resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
   depends_on = [
     azurerm_template_deployment.apim,
     data.azurerm_api_management.apim,
-    azurerm_key_vault_access_policy.apim
+    azurerm_role_assignment.apim
   ]
 }
