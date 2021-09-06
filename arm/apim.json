@@ -87,7 +87,7 @@
         "hostnameConfigurations": [
             {
                 "type": "Proxy",
-                "hostName": "[concat(parameters('Name'), '-private.azure-api.net')]",
+                "hostName": "[concat(parameters('Name'), '.azure-api.net')]",
                 "negotiateClientCertificate": true,
                 "defaultSslBinding": true,
                 "certificateSource": "BuiltIn"

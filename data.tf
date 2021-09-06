@@ -10,11 +10,11 @@ data "azurerm_api_management" "apim" {
 }
 
 data "azurerm_key_vault" "main" {
-  name                = "acmedcdcftapps${var.env}"
-  resource_group_name = "cft-platform-${var.env}-rg"
+  name                = "acmedcdcftapps${local.env}"
+  resource_group_name = "cft-platform-${local.env}-rg"
 }
 
 data "azurerm_key_vault_certificate" "certificate" {
-  name         = "wildcard-sandbox-platform-hmcts-net"
+  name         = "wildcard-${var.env}-platform-hmcts-net"
   key_vault_id = data.azurerm_key_vault.main.id
 }

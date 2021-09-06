@@ -1,6 +1,9 @@
 locals {
-  name                  = "core-api-mgmt-${var.env}-private"
-  platform_api_mgmt_sku = var.env == "prod" ? "Premium_1" : "Developer_1"
+  name = "core-api-mgmt-${var.env}-private"
+  # platform_api_mgmt_sku = var.env == "prod" ? "Premium_1" : "Developer_1"
+
+  env = (var.env == "aat") ? "stg" : (var.env == "sandbox") ? "sbox" : "${(var.env == "perftest") ? "test" : "${var.env}"}"
+
 }
 
 resource "azurerm_public_ip" "apim" {
@@ -10,12 +13,12 @@ resource "azurerm_public_ip" "apim" {
   allocation_method   = "Static"
 
   tags = var.ctags.common_tags
-  sku = "Standard"
+  sku  = "Standard"
 
 }
 
 resource "azurerm_subnet" "api-mgmt-subnet" {
-  name                 = "core-infra-subnet-apimgmt-${var.env}"
+  name                 = "core-infra-subnet-apimgmt-${local.env}"
   resource_group_name  = var.vnet_rg_name
   virtual_network_name = var.vnet_name
   address_prefixes     = ["${cidrsubnet(var.source_range, 4, 4)}"]
@@ -26,7 +29,7 @@ resource "azurerm_subnet" "api-mgmt-subnet" {
 }
 
 resource "azurerm_template_deployment" "apim" {
-  name                = "core-infra-subnet-apimgmt-${var.env}"
+  name                = "core-infra-subnet-apimgmt-${local.env}"
   resource_group_name = var.vnet_rg_name
   deployment_mode     = "Incremental"
   template_body       = file("arm/apim.json")
@@ -43,14 +46,14 @@ resource "azurerm_template_deployment" "apim" {
   }
 }
 
-resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
-  api_management_id = azurerm_api_management.api-managment.id
+# resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
+#   api_management_id = azurerm_api_management.api-managment.id
 
-  proxy {
-    host_name                    = join("", [azurerm_api_management.api-managment.name, ".azure-api.net"])
-    negotiate_client_certificate = true
-  }
-}
+#   proxy {
+#     host_name                    = join("", [data.azurerm_api_management.apim, ".azure-api.net"])
+#     negotiate_client_certificate = true
+#   }
+# }
 
 resource "azurerm_role_assignment" "apim" {
   principal_id = data.azurerm_api_management.apim.identity[0]["principal_id"]
@@ -58,7 +61,7 @@ resource "azurerm_role_assignment" "apim" {
 
   role_definition_name = "Key Vault Secrets User"
 
-    depends_on = [
+  depends_on = [
     azurerm_template_deployment.apim,
     data.azurerm_api_management.apim
   ]
@@ -83,7 +86,7 @@ resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
 
 module "ctags" {
   source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
-  environment = var.env
+  environment = local.env
   product     = var.product
   builtFrom   = var.builtFrom
 }
