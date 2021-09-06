@@ -12,7 +12,7 @@ resource "azurerm_public_ip" "apim" {
   location            = var.location
   allocation_method   = "Static"
 
-  tags = var.ctags.common_tags
+  tags = var.common_tags
   sku  = "Standard"
 
 }
@@ -24,7 +24,7 @@ resource "azurerm_subnet" "api-mgmt-subnet" {
   address_prefixes     = ["${cidrsubnet(var.source_range, 4, 4)}"]
 
   lifecycle {
-    ignore_changes = [address_prefix]
+    ignore_changes = [address_prefixes]
   }
 }
 
@@ -82,11 +82,4 @@ resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
     data.azurerm_api_management.apim,
     azurerm_role_assignment.apim
   ]
-}
-
-module "ctags" {
-  source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
-  environment = local.env
-  product     = var.product
-  builtFrom   = var.builtFrom
 }
