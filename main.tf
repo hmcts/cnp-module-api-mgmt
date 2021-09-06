@@ -24,7 +24,7 @@ resource "azurerm_subnet" "api-mgmt-subnet" {
   name                 = "core-infra-subnet-apimgmt-${local.env}"
   resource_group_name  = var.vnet_rg_name
   virtual_network_name = var.vnet_name
-  address_prefixes     = var.apim_subnet_address_prefix
+  address_prefixes     = [var.apim_subnet_address_prefix]
 
   lifecycle {
     ignore_changes = [address_prefix]
