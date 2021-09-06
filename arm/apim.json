@@ -17,7 +17,7 @@
         "subnetResourceId": {
         "type": "string",
         "metadata": {
-          "description": "APIM Name"
+          "description": "Subnet Resource ID of where apim will be deployed to"
         }
       },
       "sku_name": {
@@ -44,7 +44,7 @@
       "type": "string",
       "minLength": 1,
       "metadata": {
-        "description": "notificationSenderEmail"
+        "description": "Notifications sender Email"
       }
     },
     "virtualNetworkType": {
@@ -87,7 +87,7 @@
         "hostnameConfigurations": [
             {
                 "type": "Proxy",
-                "hostName": "[concat(parameters('Name'), '.azure-api.net')]",
+                "hostName": "[concat(parameters('Name'), '-private.azure-api.net')]",
                 "negotiateClientCertificate": true,
                 "defaultSslBinding": true,
                 "certificateSource": "BuiltIn"
