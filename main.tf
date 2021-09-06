@@ -21,7 +21,7 @@ resource "azurerm_public_ip" "apim" {
 # }
 
 resource "azurerm_subnet" "api-mgmt-subnet" {
-  name                 = "core-infra-subnet-apimgmt-${local.env}"
+  name                 = "core-infra-subnet-apimgmt-${local.env}-private"
   resource_group_name  = var.vnet_rg_name
   virtual_network_name = var.vnet_name
   address_prefixes     = [var.apim_subnet_address_prefix]
