@@ -8,6 +8,10 @@ variable "vnet_rg_name" {}
 
 variable "vnet_name" {}
 
+variable "sku_name" {}
+
+variable "virtualNetworkType" {}
+
 variable "virtual_network_type" {
   default = "External"
 }
