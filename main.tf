@@ -1,11 +1,3 @@
-locals {
-  name = "core-api-mgmt-${var.env}-private"
-  # platform_api_mgmt_sku = var.env == "prod" ? "Premium_1" : "Developer_1"
-
-  env = (var.env == "aat") ? "stg" : (var.env == "sandbox") ? "sbox" : "${(var.env == "perftest") ? "test" : "${var.env}"}"
-
-}
-
 resource "azurerm_public_ip" "apim" {
   name                = "core-api-mgmt-${var.env}-private-pip"
   resource_group_name = var.vnet_rg_name
