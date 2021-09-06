@@ -9,9 +9,7 @@ resource "azurerm_public_ip" "apim" {
   location            = var.location
   allocation_method   = "Static"
 
-  tags = {
-    environment = "Production"
-  }
+  tags = var.ctags.common_tags
   sku = "Standard"
 
 }
@@ -81,4 +79,11 @@ resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
     data.azurerm_api_management.apim,
     azurerm_role_assignment.apim
   ]
+}
+
+module "ctags" {
+  source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
+  environment = var.env
+  product     = var.product
+  builtFrom   = var.builtFrom
 }
