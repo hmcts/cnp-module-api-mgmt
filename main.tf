@@ -32,7 +32,7 @@ resource "azurerm_template_deployment" "apim" {
   name                = "core-infra-subnet-apimgmt-${local.env}"
   resource_group_name = var.vnet_rg_name
   deployment_mode     = "Incremental"
-  template_body       = file("arm/apim.json")
+  template_body       = file("${path.module}/arm/apim.json")
   parameters = {
     name                    = local.name
     location                = var.location
