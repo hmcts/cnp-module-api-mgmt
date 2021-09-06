@@ -10,17 +10,19 @@ variable "vnet_name" {}
 
 variable "sku_name" {}
 
+variable "apim_subnet_address_prefix" {}
+
 variable "virtualNetworkType" {}
 
 variable "virtual_network_type" {
   default = "External"
 }
 
-variable "source_range_index" {}
+# variable "source_range_index" {}
 
-variable "source_range" {
-  default = "10.96.192.0/18"
-}
+# variable "source_range" {
+#   default = "10.96.192.0/18"
+# }
 
 variable "publisher_email" {
   default = "api-mangement@hmcts.net"

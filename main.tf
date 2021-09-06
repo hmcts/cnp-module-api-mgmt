@@ -9,14 +9,25 @@ resource "azurerm_public_ip" "apim" {
 
 }
 
+# resource "azurerm_subnet" "api-mgmt-subnet" {
+#   name                 = "core-infra-subnet-apimgmt-${local.env}"
+#   resource_group_name  = var.vnet_rg_name
+#   virtual_network_name = var.vnet_name
+#   address_prefixes     = ["${cidrsubnet(var.source_range, 4, 4)}"]
+
+#   lifecycle {
+#     ignore_changes = [address_prefix]
+#   }
+# }
+
 resource "azurerm_subnet" "api-mgmt-subnet" {
   name                 = "core-infra-subnet-apimgmt-${local.env}"
   resource_group_name  = var.vnet_rg_name
   virtual_network_name = var.vnet_name
-  address_prefixes     = ["${cidrsubnet(var.source_range, 4, 4)}"]
+  address_prefixes     = var.apim_subnet_address_prefix
 
   lifecycle {
-    ignore_changes = [address_prefixes]
+    ignore_changes = [address_prefix]
   }
 }
 
