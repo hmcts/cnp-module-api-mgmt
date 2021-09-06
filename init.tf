@@ -1,5 +1,5 @@
 locals {
-  name = "core-api-mgmt-${var.env}-private"
+  name = "core-api-mgmt-${local.env}-private"
   # platform_api_mgmt_sku = var.env == "prod" ? "Premium_1" : "Developer_1"
 
   env = (var.env == "aat") ? "stg" : (var.env == "sandbox") ? "sbox" : "${(var.env == "perftest") ? "test" : "${var.env}"}"
