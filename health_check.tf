@@ -5,7 +5,7 @@ resource "azurerm_api_management_api" "apim" {
   revision              = "1"
   display_name          = "Health Check"
   path                  = "health"
-  protocols             = ["https"]
+  protocols             = ["http","https"]
   subscription_required = false
 }
 
