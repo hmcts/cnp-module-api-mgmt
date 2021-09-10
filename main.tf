@@ -70,7 +70,6 @@ resource "azurerm_role_assignment" "apim" {
   ]
 }
 
-
 resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
   api_management_id = data.azurerm_api_management.apim.id
 
@@ -86,3 +85,5 @@ resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
     azurerm_role_assignment.apim
   ]
 }
+
+
