@@ -38,6 +38,20 @@ resource "azurerm_network_security_rule" "apimanagement" {
   network_security_group_name = azurerm_network_security_group.apim.name
 }
 
+resource "azurerm_network_security_rule" "vpn" {
+  name                        = "vpn"
+  priority                    = 102
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "tcp"
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix      = "10.99.0.0/18"
+  destination_address_prefix = "VirtualNetwork"
+  resource_group_name         = var.vnet_rg_name
+  network_security_group_name = azurerm_network_security_group.apim.name
+}
+
 resource "azurerm_network_security_rule" "deny" {
   name                        = "deny"
   priority                    = 500
