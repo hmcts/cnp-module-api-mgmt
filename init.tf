@@ -6,13 +6,13 @@ locals {
 
 
   acmedcdcftapps = {
-    sandbox = {
+    sbox = {
       subscription = "b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb"
     }
   }
 
   palo_env_mapping = {
-    sandbox = ["sandbox"]
+    sbox = ["sbox"]
     nonprod = ["dev", "preview", "test", "ithc", "demo", "perftest"]
     prod    = ["prod", "aat"]
   }
@@ -33,7 +33,7 @@ locals {
       protocol                   = "Tcp"
       source_port_range          = "*"
       destination_port_range     = "80"
-      source_address_prefix      = local.palo_ip_addresses[[for x in keys(local.palo_env_mapping) : x if contains(local.palo_env_mapping[x], var.env)][0]].addresses
+      source_address_prefix      = local.palo_ip_addresses[[for x in keys(local.palo_env_mapping) : x if contains(local.palo_env_mapping[x], local.env)][0]].addresses
       destination_address_prefix = "*"
     }
 
