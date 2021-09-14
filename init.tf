@@ -12,46 +12,18 @@ locals {
   }
 
   palo_env_mapping = {
-    sbox = ["sbox"]
+    sbox    = ["sbox"]
     nonprod = ["dev", "preview", "test", "ithc", "demo", "perftest"]
     prod    = ["prod", "aat"]
   }
 
   palo_ip_addresses = {
     sbox = {
-      addresses = "10.10.200.37,10.10.200.38"
+      addresses = ["10.10.200.37,10.10.200.38"]
     }
   }
-
-  nsgrules = {
-
-    rdp = {
-      name                       = "palo"
-      priority                   = 100
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_port_range          = "*"
-      destination_port_range     = "80"
-      source_address_prefix      = local.palo_ip_addresses[[for x in keys(local.palo_env_mapping) : x if contains(local.palo_env_mapping[x], local.env)][0]].addresses
-      destination_address_prefix = "*"
-    }
-
-    deny = {
-      name                       = "deny"
-      priority                   = 101
-      direction                  = "Inbound"
-      access                     = "Deny"
-      protocol                   = "*"
-      source_port_range          = "*"
-      destination_port_range     = "*"
-      source_address_prefix      = "Any"
-      destination_address_prefix = "Any"
-    }
-
-  }
-
 }
+
 
 provider "azurerm" {
   alias                      = "acmedcdcftapps"
