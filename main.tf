@@ -9,17 +9,6 @@ resource "azurerm_public_ip" "apim" {
 
 }
 
-# resource "azurerm_subnet" "api-mgmt-subnet" {
-#   name                 = "core-infra-subnet-apimgmt-${local.env}"
-#   resource_group_name  = var.vnet_rg_name
-#   virtual_network_name = var.vnet_name
-#   address_prefixes     = ["${cidrsubnet(var.source_range, 4, 4)}"]
-
-#   lifecycle {
-#     ignore_changes = [address_prefix]
-#   }
-# }
-
 resource "azurerm_subnet" "api-mgmt-subnet" {
   name                 = "core-infra-subnet-apimgmt-${local.env}-private"
   resource_group_name  = var.vnet_rg_name
@@ -48,15 +37,6 @@ resource "azurerm_template_deployment" "apim" {
     publicIpAddressId       = azurerm_public_ip.apim.id
   }
 }
-
-# resource "azurerm_api_management_custom_domain" "api-management-custom-domain" {
-#   api_management_id = azurerm_api_management.api-managment.id
-
-#   proxy {
-#     host_name                    = join("", [data.azurerm_api_management.apim, ".azure-api.net"])
-#     negotiate_client_certificate = true
-#   }
-# }
 
 resource "azurerm_role_assignment" "apim" {
   principal_id = data.azurerm_api_management.apim.identity[0]["principal_id"]

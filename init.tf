@@ -13,13 +13,19 @@ locals {
 
   palo_env_mapping = {
     sbox    = ["sbox"]
-    nonprod = ["dev", "preview", "test", "ithc", "demo", "perftest"]
-    prod    = ["prod", "aat"]
+    nonprod = ["demo", "ithc", "test"]
+    prod    = ["prod", "stg"]
   }
 
   palo_ip_addresses = {
     sbox = {
       addresses = "10.10.200.37,10.10.200.38"
+    },
+    nonprod = {
+      addresses = "10.11.72.37,10.11.72.38"
+    },
+    prod = {
+      addresses = "10.11.8.37,10.11.8.38"
     }
   }
 }
