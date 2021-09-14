@@ -19,7 +19,7 @@ locals {
 
   palo_ip_addresses = {
     sbox = {
-      addresses = ["10.10.200.37,10.10.200.38"]
+      addresses = "10.10.200.37,10.10.200.38"
     }
   }
 }

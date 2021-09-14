@@ -13,7 +13,7 @@ resource "azurerm_network_security_rule" "palo" {
   protocol                    = "tcp"
   source_port_range           = "*"
   destination_port_range      = "80"
-  source_address_prefixes     = local.palo_ip_addresses[[for x in keys(local.palo_env_mapping) : x if contains(local.palo_env_mapping[x], local.env)][0]].addresses
+  source_address_prefixes     = split(",", local.palo_ip_addresses[[for x in keys(local.palo_env_mapping) : x if contains(local.palo_env_mapping[x], local.env)][0]].addresses)
   destination_address_prefix = "VirtualNetwork"
   resource_group_name         = var.vnet_rg_name
   network_security_group_name = azurerm_network_security_group.apim.name
