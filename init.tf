@@ -12,7 +12,7 @@ locals {
   }
 
   palo_env_mapping = {
-    sandbox = ["sbox"]
+    sandbox = ["sandbox"]
     nonprod = ["dev", "preview", "test", "ithc", "demo", "perftest"]
     prod    = ["prod", "aat"]
   }
