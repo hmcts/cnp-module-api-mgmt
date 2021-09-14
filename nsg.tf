@@ -45,7 +45,7 @@ resource "azurerm_network_security_rule" "vpn" {
   access                      = "Allow"
   protocol                    = "tcp"
   source_port_range           = "*"
-  destination_port_range      = "80"
+  destination_port_ranges      = [80,443]
   source_address_prefix      = "10.99.0.0/18"
   destination_address_prefix = "VirtualNetwork"
   resource_group_name         = var.vnet_rg_name
