@@ -70,7 +70,7 @@
       "location": "[parameters('location')]",
       "sku": {
         "name": "[parameters('sku_name')]",
-        "capacity": 3
+        "capacity": "[if(equals(parameters('sku_name'), 'Premium'), 3, 1)]"
       },
       "identity": {
         "type": "SystemAssigned"
@@ -94,7 +94,7 @@
             }
         ]
       },
-      "zones": [ "1","2","3" ]
+      "zones": [ "[if(equals(parameters('sku_name'), 'Premium'), json('{\"1,2,3\"}'), json('null'))]" ]
     }
     ]
 }
