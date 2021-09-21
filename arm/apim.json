@@ -101,7 +101,7 @@
             }
         ]
       },
-      "zones": [ "[parameters('zones')]" ]
+      "zones": "[parameters('zones')]"
     }
     ]
 }
