@@ -53,6 +53,13 @@
         "description": "Virtual Network Type"
       }
     },
+    "zones": {
+      "type": "string",
+      "defaultValue": null,
+      "metadata": {
+        "description": "Number of zones for APIM to be deployed"
+      }
+    },
     "publicIpAddressId": {
       "type": "string",
       "metadata": {
@@ -94,7 +101,7 @@
             }
         ]
       },
-      "zones": [ "[if(equals(parameters('sku_name'), 'Premium'), json('{\"1,2,3\"}'), json('null'))]" ]
+      "zones": [ "[parameters('zones')]" ]
     }
     ]
 }
