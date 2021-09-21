@@ -73,7 +73,7 @@ resource "azurerm_network_security_rule" "SyncCounter" {
   access                      = "Allow"
   protocol                    = "udp"
   source_port_range           = "*"
-  destination_port_ranges     = "4290"
+  destination_port_ranges     = ["4290"]
   source_address_prefix       = "VirtualNetwork"
   destination_address_prefix  = "VirtualNetwork"
   resource_group_name         = var.vnet_rg_name
@@ -87,7 +87,7 @@ resource "azurerm_network_security_rule" "loadbalancer" {
   access                      = "Allow"
   protocol                    = "tcp"
   source_port_range           = "*"
-  destination_port_ranges     = "*"
+  destination_port_range      = "*"
   source_address_prefix       = "VirtualNetwork"
   destination_address_prefix  = "VirtualNetwork"
   resource_group_name         = var.vnet_rg_name
