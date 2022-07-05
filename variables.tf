@@ -35,10 +35,3 @@ variable "common_tags" {
     "managedBy" = "pleaseTagMe"
   }
 }
-
-variable "common_tags" {
-  type = map(string)
-  default = {
-    "Team Name" = "pleaseTagMe"
-  }
-}
