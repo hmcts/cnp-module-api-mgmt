@@ -9,8 +9,6 @@ resource "azurerm_subnet" "api-mgmt-subnet" {
   virtual_network_name = var.vnet_name
   address_prefixes     = ["${cidrsubnet(var.source_range, 4, 4)}"]
 
-  tags = var.common_tags
-
   lifecycle {
     ignore_changes = [address_prefix]
   }
