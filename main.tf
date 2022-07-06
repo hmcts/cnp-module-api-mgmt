@@ -23,6 +23,8 @@ resource "azurerm_api_management" "api-managment" {
   notification_sender_email = var.notification_sender_email
   virtual_network_type      = var.virtual_network_type
 
+  tags = var.common_tags
+
   virtual_network_configuration {
     subnet_id = azurerm_subnet.api-mgmt-subnet.id
   }
