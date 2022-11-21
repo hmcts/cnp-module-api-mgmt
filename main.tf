@@ -10,7 +10,7 @@ resource "azurerm_subnet" "api-mgmt-subnet" {
   address_prefixes     = ["${cidrsubnet(var.source_range, 4, 4)}"]
 
   lifecycle {
-    ignore_changes = [address_prefix]
+    ignore_changes = [address_prefixes]
   }
 }
 
