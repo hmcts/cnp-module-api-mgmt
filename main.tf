@@ -1,6 +1,6 @@
 locals {
   name                  = "core-api-mgmt-${var.env}"
-  platform_api_mgmt_sku = "${var.env == "prod" ? "Premium_1" : "Developer_1"}"
+  platform_api_mgmt_sku = var.env == "prod" ? "Premium_1" : "Developer_1"
 }
 
 resource "azurerm_subnet" "api-mgmt-subnet" {
