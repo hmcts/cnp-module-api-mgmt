@@ -7,5 +7,5 @@ output "developer_portal_url" {
 }
 
 output "api_mgmt_name" {
-  value = "${azurerm_api_management.api-managment.name}"
+  value = azurerm_api_management.api-managment.name
 }
